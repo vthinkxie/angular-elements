@@ -1,16 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 
-import { AppComponent } from './app.component';
+import { ContainerComponent } from './container/container.component';
+import { ItemComponent } from './item/item.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [ContainerComponent, ItemComponent],
+  imports: [BrowserModule]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(injector: Injector) {
+    customElements.define('ngx-container', createCustomElement(ContainerComponent, { injector }));
+    customElements.define('ngx-item', createCustomElement(ItemComponent, { injector }));
+  }
+  ngDoBootstrap() {}
+}
